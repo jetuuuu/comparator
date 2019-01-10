@@ -1,5 +1,5 @@
 const $ = require("jquery");
-const dxChart = require("devextreme/viz/chart");
+const Highcharts = require("highcharts");
 const Invoker = require("./invoker");
 
 function randomNumner(min, max) {
@@ -7,13 +7,12 @@ function randomNumner(min, max) {
 }
 
 function simpleLine() {
-  new dxChart(this.domContainer, {
-    dataSource: this.dataSource,
-    commonSeriesSettings: {
-      argumentField: "argument",
-      type: "line"
-    },
-    series: [{ valueField: "value", name: "value" }]
+  Highcharts.chart("chart", {
+    series: [
+      {
+        data: this.dataSource
+      }
+    ]
   });
 }
 
@@ -21,10 +20,7 @@ function generateDataSource() {
   return Array(10000)
     .fill()
     .map((_, i) => {
-      return {
-        value: i,
-        argument: randomNumner(0, 10000)
-      };
+      return [i, randomNumner(0, 10000)];
     });
 }
 
@@ -42,7 +38,7 @@ $(function() {
 
   const result = invoker.invoke(simpleLine.bind(this), 10);
 
-  document.getElementById("results").innerHTML += `<p>dx; max: ${
+  document.getElementById("results").innerHTML += `<p>highcharts; max: ${
     result.max
   }; min: ${result.min}; avg: ${result.avg}</p>`;
 });
