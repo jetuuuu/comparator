@@ -26,6 +26,16 @@ const functions = {
       },
       series: [{ valueField: "value", name: "value" }]
     });
+  },
+  simpleBar: () => {
+    new dxChart(this.domContainer, {
+      dataSource: this.dataSource,
+      commonSeriesSettings: {
+        argumentField: "argument",
+        type: "bar"
+      },
+      series: [{ valueField: "value", name: "value" }]
+    });
   }
 };
 

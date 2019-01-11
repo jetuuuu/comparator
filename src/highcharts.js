@@ -30,6 +30,18 @@ const functions = {
         }
       ]
     });
+  },
+  simpleBar: () => {
+    Highcharts.chart("chart", {
+      chart: {
+        type: "bar"
+      },
+      series: [
+        {
+          data: this.dataSource
+        }
+      ]
+    });
   }
 };
 

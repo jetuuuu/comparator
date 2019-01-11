@@ -40,7 +40,7 @@ window.addEventListener("load", () => {
   const checkboxes = document.createElement("div");
   checkboxes.id = "checkboxes";
 
-  checkboxes.innerHTML = ["simpleLine", "simpleArea"]
+  checkboxes.innerHTML = ["simpleLine", "simpleArea", "simpleBar"]
     .map(func => {
       return `<div>
                     <input type="checkbox" id="${func}" name="${func}">
