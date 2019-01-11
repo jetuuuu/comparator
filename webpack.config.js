@@ -1,15 +1,11 @@
 "use strict";
 
 const path = require("path");
+const glob = require("glob");
 
 module.exports = {
   mode: "development",
-  entry: {
-    store: "./src/store.js",
-    index: "./src/index.js",
-    dx: "./src/dx.js",
-    highcharts: "./src/highcharts.js"
-  },
+  entry: glob.sync("./src/*.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js"
