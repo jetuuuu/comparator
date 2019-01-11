@@ -46,10 +46,11 @@ const functions = {
 };
 
 function generateDataSource() {
-  return Array(10000)
+  const count = store.getState().points;
+  return Array(count)
     .fill()
     .map((_, i) => {
-      return randomNumner(0, 10000);
+      return randomNumner(0, count);
     });
 }
 
@@ -66,7 +67,10 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  const result = invoker.invoke(functions[f].bind(this), 10);
+  const result = invoker.invoke(
+    functions[f].bind(this),
+    store.getState().experiments
+  );
   store.dispatch({
     type: "highcharts_result",
     payload: {

@@ -27,3 +27,21 @@ export function functions(state = [], action) {
       return state;
   }
 }
+
+export function points(state = 0, action) {
+  switch (action.type) {
+    case "points_count":
+      return action.payload.count;
+    default:
+      return state;
+  }
+}
+
+export function experiments(state = 0, action) {
+  switch (action.type) {
+    case "experiments_count":
+      return action.payload.count;
+    default:
+      return state;
+  }
+}

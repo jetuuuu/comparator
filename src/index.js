@@ -18,6 +18,24 @@ document.getElementById("charts").addEventListener("change", event => {
   }
 });
 
+document.getElementById("points").addEventListener("change", event => {
+  store.dispatch({
+    type: "points_count",
+    payload: {
+      count: +event.target.value
+    }
+  });
+});
+
+document.getElementById("experiments").addEventListener("change", event => {
+  store.dispatch({
+    type: "experiments_count",
+    payload: {
+      count: +event.target.value
+    }
+  });
+});
+
 store.subscribe(() => {
   const results = store.getState().result;
   let result = [];
