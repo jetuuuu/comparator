@@ -7,59 +7,59 @@ function randomNumner(min, max) {
 }
 
 const functions = {
-    simpleArea: () => {
-        Highcharts.chart("chart", {
-            chart: {
-                type: "area"
-            },
-          series: [
-            {
-              data: this.dataSource
-            }
-          ]
-        });
+  simpleArea: () => {
+    Highcharts.chart("chart", {
+      chart: {
+        type: "area"
       },
-      simpleLine: () => {
-        Highcharts.chart("chart", {
-            chart: {
-                type: "line"
-            },
-          series: [
-            {
-              data: this.dataSource
-            }
-          ]
-        });
-      }
+      series: [
+        {
+          data: this.dataSource
+        }
+      ]
+    });
+  },
+  simpleLine: () => {
+    Highcharts.chart("chart", {
+      chart: {
+        type: "line"
+      },
+      series: [
+        {
+          data: this.dataSource
+        }
+      ]
+    });
+  }
 };
 
 function generateDataSource() {
   return Array(10000)
     .fill()
     .map((_, i) => {
-      return  randomNumner(0, 10000);
+      return randomNumner(0, 10000);
     });
 }
 
-  this.domContainer = document.getElementById("chart");
+this.domContainer = document.getElementById("chart");
 
-  const invoker = new Invoker();
+const invoker = new Invoker();
 
-  invoker.beforeEach = () => {
-    this.dataSource = generateDataSource();
-  };
+invoker.beforeEach = () => {
+  this.dataSource = generateDataSource();
+};
 
-  invoker.afterEach = () => {
-    this.domContainer.innerHTML = "";
-  };
+invoker.afterEach = () => {
+  this.domContainer.innerHTML = "";
+};
 
-  store.getState().functions.forEach(f => {
-    const result = invoker.invoke(functions[f].bind(this), 10);
-    store.dispatch({
-        type: "highcharts_result",
-        payload: {
-            name: f,
-            result,
-        }
-    });
+store.getState().functions.forEach(f => {
+  const result = invoker.invoke(functions[f].bind(this), 10);
+  store.dispatch({
+    type: "highcharts_result",
+    payload: {
+      name: f,
+      result
+    }
   });
+});
