@@ -8,16 +8,18 @@ function loadScript(path) {
 }
 
 document.getElementById("charts").addEventListener("change", event => {
-  switch (event.target.value) {
-    case "dx":
-      loadScript("dist/dx.js");
-      break;
-    case "highcharts":
-      loadScript("dist/highcharts.js");
-      break;
-    default:
-      alert("unsupported");
-  }
+  store.dispatch({
+    type: "add_chart_library",
+    payload: {
+      name: event.target.value
+    }
+  });
+});
+
+document.getElementById("start").addEventListener("click", event => {
+  store.getState().libraries.forEach(chart => {
+    loadScript(`dist/${chart}.js`);
+  });
 });
 
 document.getElementById("points").addEventListener("change", event => {

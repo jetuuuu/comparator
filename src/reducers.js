@@ -1,7 +1,6 @@
 const initialState = {
   dx: [],
-  highcharts: [],
-  functions: []
+  highcharts: []
 };
 
 export function result(state = initialState, action) {
@@ -41,6 +40,15 @@ export function experiments(state = 0, action) {
   switch (action.type) {
     case "experiments_count":
       return action.payload.count;
+    default:
+      return state;
+  }
+}
+
+export function libraries(state = [], action) {
+  switch (action.type) {
+    case "add_chart_library":
+      return [...state, action.payload.name];
     default:
       return state;
   }

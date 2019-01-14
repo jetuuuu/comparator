@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { result, functions, points, experiments } from "./reducers";
+import { result, functions, points, experiments, libraries } from "./reducers";
 
 const Push = require("push.js");
 
@@ -11,6 +11,6 @@ const notifyMiddleware = store => next => action => {
 };
 
 window.store = createStore(
-  combineReducers({ result, functions, points, experiments }),
+  combineReducers({ result, functions, points, experiments, libraries }),
   applyMiddleware(notifyMiddleware)
 );
