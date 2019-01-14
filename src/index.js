@@ -1,3 +1,5 @@
+const Push = require("push.js");
+
 function loadScript(path) {
   const script = document.createElement("script");
   script.src = path;
@@ -36,7 +38,7 @@ document.getElementById("experiments").addEventListener("change", event => {
   });
 });
 
-store.subscribe(() => {
+store.subscribe((...args) => {
   const results = store.getState().result;
   let result = [];
   for (let key in results) {
@@ -86,4 +88,6 @@ window.addEventListener("load", () => {
   });
 
   app.appendChild(checkboxes);
+
+  Push.Permission.request();
 });
