@@ -26,6 +26,16 @@ const functions = {
 
     chart.container(this.domContainer);
     chart.draw();
+  },
+  simpleBar: () => {
+    var dataSet = anychart.data.set();
+
+    dataSet.data(this.dataSource);
+
+    var chart = anychart.bar(dataSet);
+
+    chart.container(this.domContainer);
+    chart.draw();
   }
 };
 
