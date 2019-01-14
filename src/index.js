@@ -40,7 +40,7 @@ document.getElementById("experiments").addEventListener("change", event => {
   });
 });
 
-store.subscribe((...args) => {
+store.subscribe(() => {
   const results = store.getState().result;
   let result = [];
   for (let key in results) {

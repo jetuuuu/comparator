@@ -23,7 +23,8 @@
     "redux": "^4.0.1",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "zingchart": "^2.8.4"
   },
   "dependencies": {}
 }
