@@ -1,5 +1,4 @@
 const anychart = require("anychart");
-const $ = require("jquery");
 const Invoker = require("./invoker");
 
 function randomNumner(min, max) {
