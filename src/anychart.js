@@ -1,5 +1,5 @@
+const anychart = require("anychart");
 const $ = require("jquery");
-const dxChart = require("devextreme/viz/chart");
 const Invoker = require("./invoker");
 
 function randomNumner(min, max) {
@@ -8,34 +8,17 @@ function randomNumner(min, max) {
 
 const functions = {
   simpleLine: () => {
-    new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "line"
-      },
-      series: [{ valueField: "value", name: "value" }]
-    });
-  },
-  simpleArea: () => {
-    new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "area"
-      },
-      series: [{ valueField: "value", name: "value" }]
-    });
-  },
-  simpleBar: () => {
-    new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "bar"
-      },
-      series: [{ valueField: "value", name: "value" }]
-    });
+    var dataSet = anychart.data.set();
+
+    dataSet.data(this.dataSource);
+
+    // create line chart
+    var chart = anychart.line(dataSet);
+
+    // set container id for the chart
+    chart.container(this.domContainer);
+    // initiate chart drawing
+    chart.draw();
   }
 };
 
@@ -68,7 +51,7 @@ store.getState().functions.forEach(f => {
     store.getState().experiments
   );
   store.dispatch({
-    type: "dx_result",
+    type: "anychart_result",
     payload: {
       name: f,
       result

@@ -1,6 +1,7 @@
 const initialState = {
   dx: [],
-  highcharts: []
+  highcharts: [],
+  anychart: []
 };
 
 export function result(state = initialState, action) {
@@ -10,6 +11,10 @@ export function result(state = initialState, action) {
     case "highcharts_result":
       return Object.assign({}, state, {
         highcharts: [...state.highcharts, action.payload]
+      });
+    case "anychart_result":
+      return Object.assign({}, state, {
+        anychart: [...state.anychart, action.payload]
       });
     default:
       return state;
