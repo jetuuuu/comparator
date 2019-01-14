@@ -12,12 +12,19 @@ const functions = {
 
     dataSet.data(this.dataSource);
 
-    // create line chart
     var chart = anychart.line(dataSet);
 
-    // set container id for the chart
     chart.container(this.domContainer);
-    // initiate chart drawing
+    chart.draw();
+  },
+  simpleArea: () => {
+    var dataSet = anychart.data.set();
+
+    dataSet.data(this.dataSource);
+
+    var chart = anychart.area(dataSet);
+
+    chart.container(this.domContainer);
     chart.draw();
   }
 };
