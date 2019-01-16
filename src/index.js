@@ -1,10 +1,14 @@
-const Push = require("push.js");
+import Push from "push.js";
+const $ = require("jquery");
 
-function loadScript(path) {
-  const script = document.createElement("script");
-  script.src = path;
+function loadScript(path, id) {
+  var iframe = document.createElement('iframe');
+  iframe.id = `${id}_frame`;
 
-  document.body.appendChild(script);
+  var html = `<body><div id="chart"></div> <script src=${path}></script> </body>`;
+  iframe.src = path;
+
+  document.body.appendChild(iframe);
 }
 
 document.getElementById("charts").addEventListener("click", event => {
@@ -21,7 +25,7 @@ document.getElementById("charts").addEventListener("click", event => {
 
 document.getElementById("start").addEventListener("click", event => {
   store.getState().libraries.forEach(chart => {
-    loadScript(`dist/${chart}.js`);
+    loadScript(`dist/${chart}.html`, chart);
   });
 });
 

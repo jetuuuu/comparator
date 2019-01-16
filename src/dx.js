@@ -40,7 +40,7 @@ const functions = {
 };
 
 function generateDataSource() {
-  const count = store.getState().points;
+  const count = parent.store.getState().points;
   return Array(count)
     .fill()
     .map((_, i) => {
@@ -53,21 +53,21 @@ function generateDataSource() {
 
 this.domContainer = document.getElementById("chart");
 
-const invoker = new Invoker();
+var invoker = new Invoker();
 
 invoker.beforeEach = () => {
   this.dataSource = generateDataSource();
 };
-invoker.afterEach = () => {
+invoker.afterEach1 = () => {
   this.domContainer.innerHTML = "";
 };
-
-store.getState().functions.forEach(f => {
+debugger;
+parent.store.getState().functions.forEach(f => {
   const result = invoker.invoke(
     functions[f].bind(this),
-    store.getState().experiments
+    parent.store.getState().experiments
   );
-  store.dispatch({
+  parent.store.dispatch({
     type: "dx_result",
     payload: {
       name: f,

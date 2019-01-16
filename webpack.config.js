@@ -2,6 +2,7 @@
 
 const path = require("path");
 const glob = require("glob");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = glob.sync("./src/*.js").reduce((prev, current) => {
     return {
@@ -17,6 +18,12 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js"
   },
-
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['dx'],
+      filename: 'dx.html'
+    }),
+  ],
   watch: true
 };

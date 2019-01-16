@@ -1,7 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { result, functions, points, experiments, libraries } from "./reducers";
-
-const Push = require("push.js");
+import Push from "push.js";
 
 const notifyMiddleware = store => next => action => {
   if (action.type.endsWith("_result")) {
