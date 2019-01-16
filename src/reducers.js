@@ -59,6 +59,8 @@ export function libraries(state = [], action) {
   switch (action.type) {
     case "add_chart_library":
       return [...state, action.payload.name];
+    case "remove_chart_library":
+      return state.filter(lib => lib !== action.payload.name);
     default:
       return state;
   }

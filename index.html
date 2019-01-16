@@ -5,39 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Compare charts</title>
+    <style>
+      #app {
+        display: flex;
+        align-items: flex-start;
+        width: 80vw;
+        justify-content: space-around;
+      }
+
+      #start {
+        align-self: stretch;
+      }
+
+      #results {
+        width: 40%;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
-      <div id="results"></div>
-      <span>Charts</span>
-      <select id="charts">
-        <option value="" selected disabled hidden>Choose here</option>
-        <option value="dx">dx</option>
-        <option value="highcharts">Highcharts</option>
-        <option value="anychart">anychart</option>
-        <option value="zingchart">zingchart</option>
-      </select>
-      <span>Points count</span>
-      <select id="points">
-        <option value="" selected disabled hidden>Choose here</option>
-        <option value="10">10</option>
-        <option value="100">100</option>
-        <option value="1000">1.000</option>
-        <option value="10000">10.000</option>
-        <option value="100000">100.000</option>
-        <option value="1000000">1.000.000</option>
-      </select>
-      <span>Experiments count</span>
-      <select id="experiments">
-        <option value="" selected disabled hidden>Choose here</option>
-        <option value="1">1</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="30">30</option>
-        <option value="50">50</option>
-      </select>
+      <div class="cintainer" id="charts">
+        <span>Charts</span>
+        <div>
+          <input type="checkbox" id="dx" name="dx" /> <label for="dx">dx</label>
+        </div>
+        <div>
+          <input type="checkbox" id="highcharts" name="highcharts" />
+          <label for="highcharts">highcharts</label>
+        </div>
+        <div>
+          <input type="checkbox" id="anychart" name="anychart" />
+          <label for="anychart">anychart</label>
+        </div>
+        <div>
+          <input type="checkbox" id="zingchart" name="zingchart" />
+          <label for="zingchart">zingchart</label>
+        </div>
+      </div>
+      <div class="cintainer">
+        <span>Points count</span>
+        <select id="points">
+          <option value="" selected disabled hidden>Choose here</option>
+          <option value="10">10</option>
+          <option value="100">100</option>
+          <option value="1000">1.000</option>
+          <option value="10000">10.000</option>
+          <option value="100000">100.000</option>
+          <option value="1000000">1.000.000</option>
+        </select>
+      </div>
+      <div class="cintainer">
+        <span>Experiments count</span>
+        <select id="experiments">
+          <option value="" selected disabled hidden>Choose here</option>
+          <option value="1">1</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+        </select>
+      </div>
       <button id="start">Start</button>
+      <div id="results"></div>
     </div>
 
     <div id="chart"></div>

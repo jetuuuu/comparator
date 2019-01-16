@@ -7,11 +7,14 @@ function loadScript(path) {
   document.body.appendChild(script);
 }
 
-document.getElementById("charts").addEventListener("change", event => {
+document.getElementById("charts").addEventListener("click", event => {
+  const type = event.target.checked
+    ? "add_chart_library"
+    : "remove_chart_library";
   store.dispatch({
-    type: "add_chart_library",
+    type,
     payload: {
-      name: event.target.value
+      name: event.target.id
     }
   });
 });
@@ -43,12 +46,16 @@ document.getElementById("experiments").addEventListener("change", event => {
 store.subscribe(() => {
   const results = store.getState().result;
   let result = [];
+
   for (let key in results) {
     const html = results[key].map(
       ({ name, result }) =>
-        `<p>${key}[${name}]; max: ${result.max}; min: ${result.min}; avg: ${
-          result.avg
-        }</p>`
+        `<p>
+          <span>${key}[${name}];</span>
+          <span>max: ${result.max};</span>
+          <span>min: ${result.min};</span>
+          <span>avg: ${result.avg}</span>
+        </p>`
     );
     result = result.concat(html);
   }
@@ -61,35 +68,29 @@ window.addEventListener("load", () => {
 
   const checkboxes = document.createElement("div");
   checkboxes.id = "checkboxes";
+  checkboxes.classList.add("container");
 
-  checkboxes.innerHTML = ["simpleLine", "simpleArea", "simpleBar"]
-    .map(func => {
-      return `<div>
+  checkboxes.innerHTML =
+    "<span>Types</span>" +
+    ["simpleLine", "simpleArea", "simpleBar"]
+      .map(func => {
+        return `<div>
                     <input type="checkbox" id="${func}" name="${func}">
                     <label for="${func}">${func}</label>
                 </div>`;
-    })
-    .join("");
+      })
+      .join("");
 
   checkboxes.addEventListener("click", event => {
-    if (event.target.checked) {
-      store.dispatch({
-        type: "add_function",
-        payload: {
-          func: event.target.id
-        }
-      });
-    } else {
-      store.dispatch({
-        type: "remove_function",
-        payload: {
-          func: event.target.id
-        }
-      });
-    }
+    const type = event.target.checked ? "add_function" : "remove_function";
+    store.dispatch({
+      type,
+      payload: {
+        func: event.target.id
+      }
+    });
   });
-
-  app.appendChild(checkboxes);
+  app.insertBefore(checkboxes, document.getElementById("start"));
 
   Push.Permission.request();
 });
