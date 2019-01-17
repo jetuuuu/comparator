@@ -14,7 +14,8 @@ const functions = {
   simpleArea: () => {
     chart = Highcharts.chart("chart", {
       chart: {
-        type: "area"
+        type: "area",
+        animation: false
       },
       series: [
         {
@@ -24,9 +25,14 @@ const functions = {
     });
   },
   simpleLine: () => {
+    return new Promise(resolve => {
     chart = Highcharts.chart("chart", {
       chart: {
-        type: "line"
+        type: "line",
+        animation: false,
+        events: {
+          load: resolve()
+        }
       },
       series: [
         {
@@ -34,11 +40,13 @@ const functions = {
         }
       ]
     });
+  });
   },
   simpleBar: () => {
     chart = Highcharts.chart("chart", {
       chart: {
-        type: "bar"
+        type: "bar",
+        animation: false
       },
       series: [
         {
@@ -74,15 +82,17 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  const result = invoker.invoke(
+  invoker.invoke(
     functions[f].bind(this),
     store.getState().experiments
-  );
-  store.dispatch({
-    type: "highcharts_result",
-    payload: {
-      name: f,
-      result
-    }
+  ).then(result => {
+    store.dispatch({
+      type: "highcharts_result",
+      payload: {
+        name: f,
+        result
+      }
+    });
   });
+
 });

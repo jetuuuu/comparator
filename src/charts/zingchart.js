@@ -12,6 +12,7 @@ if (utils.isIframe()) {
 
 const functions = {
   simpleLine: () => {
+    return new Promise(resolve => {
     chart = zingchart.render({
       id: "chart",
       data: {
@@ -21,8 +22,12 @@ const functions = {
             values: generateDataSource()
           }
         ]
-      }
+      },
+      events: {
+        complete: resolve()
+     }
     });
+  });
   },
   simpleArea: () => {
     chart = zingchart.render({
@@ -72,15 +77,17 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  const result = invoker.invoke(
+  invoker.invoke(
     functions[f].bind(this),
     store.getState().experiments
-  );
-  store.dispatch({
-    type: "zingchart_result",
-    payload: {
-      name: f,
-      result
-    }
-  });
+  ).then(result => {
+    store.dispatch({
+      type: "zingchart_result",
+      payload: {
+        name: f,
+        result
+      }
+    });
+  })
+
 });

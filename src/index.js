@@ -57,9 +57,7 @@ store.subscribe(() => {
       ({ name, result }) =>
         `<p>
           <span>${key}[${name}];</span>
-          <span>max: ${result.max};</span>
-          <span>min: ${result.min};</span>
-          <span>avg: ${result.avg}</span>
+          <span>median: ${result.median}</span>
         </p>`
     );
     result = result.concat(html);

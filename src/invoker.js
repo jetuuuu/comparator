@@ -1,4 +1,5 @@
 import "babel-polyfill";
+import utils from "./utils";
 
 class Invoker {
   constructor() {
@@ -29,9 +30,7 @@ class Invoker {
 
       return {
         rawResult: results,
-        max: Math.max.apply(null, results).toFixed(2),
-        min: Math.min.apply(null, results).toFixed(2),
-        avg: (results.reduce((p, c) => p + c, 0) / results.length).toFixed(2)
+        median: utils.median(results).toFixed(2)
       };
     });
   }
