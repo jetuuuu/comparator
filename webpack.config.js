@@ -13,19 +13,16 @@ const browsers = [
   '> 1%',
 ];
 
-const entry = glob.sync("./src/*.js").reduce((prev, current) => {
+const entry = glob.sync("./src/**/*.js").reduce((prev, current) => {
   return {
     ...prev,
     [path.basename(current).split(".js")[0]]: current
   };
 }, {});
 
-const htmls = glob.sync("./src/*.js").map(f => {
+const htmls = glob.sync("./src/charts/*.js").map(f => {
   const name = path.basename(f).split(".js")[0];
   let teamplate = "./src/teamplate.html";
-  if (name === "index") {
-    teamplate = "./index.html"
-  }
   return new HtmlWebpackPlugin({
     inject: true,
     chunks: [name],
@@ -39,7 +36,8 @@ module.exports = {
   entry: entry,
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].js"
+    filename: "[name].js",
+    publicPath: '/dist/'
   },
   plugins: htmls,
   watch: true,

@@ -1,7 +1,7 @@
 import "babel-polyfill";
 const anychart = require("anychart");
-const Invoker = require("./invoker");
-const utils = require("./utils");
+const Invoker = require("../invoker");
+const utils = require("../utils");
 
 let store;
 if (utils.isIframe()) {
