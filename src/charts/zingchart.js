@@ -62,13 +62,8 @@ function generateDataSource() {
 }
 
 const domContainer = document.getElementById("chart");
-let dataSource;
 
 const invoker = new Invoker();
-
-invoker.beforeEach = () => {
-  dataSource = generateDataSource();
-};
 
 invoker.afterEach = () => {
   chart.destroy();

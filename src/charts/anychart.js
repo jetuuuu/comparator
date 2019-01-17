@@ -3,21 +3,24 @@ const anychart = require("anychart");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store,
-    chart;
+let store, chart;
 if (utils.isIframe()) {
   store = parent.store;
 }
 
 const functions = {
   simpleLine: () => {
-    var dataSet = anychart.data.set();
-    dataSet.data(dataSource);
+    return new Promise(resolve => {
+      var dataSet = anychart.data.set();
+      dataSet.data(dataSource);
 
-    chart = anychart.line(dataSet);
-
-    chart.container(domContainer);
-    chart.draw();
+      chart = anychart.line(dataSet);
+      chart.container(domContainer);
+      chart.listenOnce("chartDraw", resolve);
+      chart.animation(false);
+      
+      chart.draw();
+    });
   },
   simpleArea: () => {
     var dataSet = anychart.data.set();
@@ -66,15 +69,15 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  const result = invoker.invoke(
-    functions[f].bind(this),
-    store.getState().experiments
-  );
-  store.dispatch({
-    type: "anychart_result",
-    payload: {
-      name: f,
-      result
-    }
-  });
+  invoker
+    .invoke(functions[f].bind(this), store.getState().experiments)
+    .then(result => {
+      store.dispatch({
+        type: "anychart_result",
+        payload: {
+          name: f,
+          result
+        }
+      });
+    });
 });
