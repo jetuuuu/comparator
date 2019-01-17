@@ -1,4 +1,4 @@
-import Push from "push.js";
+import "babel-polyfill";
 
 function loadScript(path, id) {
   const iframe = document.createElement("iframe");
@@ -96,6 +96,4 @@ window.addEventListener("load", () => {
     });
   });
   app.insertBefore(checkboxes, document.getElementById("start"));
-
-  Push.Permission.request();
 });

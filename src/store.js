@@ -1,15 +1,8 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { result, functions, points, experiments, libraries } from "./reducers";
-import Push from "push.js";
+import "babel-polyfill";
 
-const notifyMiddleware = store => next => action => {
-  if (action.type.endsWith("_result")) {
-    Push.create("Experiment finished!");
-  }
-  next(action);
-};
+import { createStore, combineReducers } from "redux";
+import { result, functions, points, experiments, libraries } from "./reducers";
 
 window.store = createStore(
-  combineReducers({ result, functions, points, experiments, libraries }),
-  applyMiddleware(notifyMiddleware)
+  combineReducers({ result, functions, points, experiments, libraries })
 );

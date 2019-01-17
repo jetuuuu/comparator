@@ -1,15 +1,18 @@
+import "babel-polyfill";
+
 const dxChart = require("devextreme/viz/chart");
 const Invoker = require("./invoker");
 const utils = require("./utils");
 
+let store;
 if (utils.isIframe()) {
   store = parent.store;
 }
 
 const functions = {
   simpleLine: () => {
-    new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
+    new dxChart(domContainer, {
+      dataSource: dataSource,
       commonSeriesSettings: {
         argumentField: "argument",
         type: "line"
@@ -51,15 +54,16 @@ function generateDataSource() {
     });
 }
 
-this.domContainer = document.getElementById("chart");
+const domContainer = document.getElementById("chart");
 
 var invoker = new Invoker();
+let dataSource;
 
 invoker.beforeEach = () => {
-  this.dataSource = generateDataSource();
+  dataSource = generateDataSource();
 };
 invoker.afterEach = () => {
-  this.domContainer.innerHTML = "";
+  domContainer.innerHTML = "";
 };
 
 store.getState().functions.forEach(f => {

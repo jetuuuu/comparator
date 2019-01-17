@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 class Invoker {
   constructor() {
     this.beforeEach = () => {};

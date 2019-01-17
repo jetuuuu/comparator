@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 const initialState = {
   dx: [],
   highcharts: [],

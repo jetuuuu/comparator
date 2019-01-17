@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 function isIframe() {
   return window.location !== window.parent.location;
 }

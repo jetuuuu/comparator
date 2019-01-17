@@ -1,7 +1,10 @@
+import "babel-polyfill";
+
 const zingchart = require("zingchart");
 const Invoker = require("./invoker");
 const utils = require("./utils");
 
+let store;
 if (utils.isIframe()) {
   store = parent.store;
 }
@@ -57,16 +60,17 @@ function generateDataSource() {
     });
 }
 
-this.domContainer = document.getElementById("chart");
+const domContainer = document.getElementById("chart");
+let dataSource;
 
 const invoker = new Invoker();
 
 invoker.beforeEach = () => {
-  this.dataSource = generateDataSource();
+  dataSource = generateDataSource();
 };
 
 invoker.afterEach = () => {
-  this.domContainer.innerHTML = "";
+  domContainer.innerHTML = "";
 };
 
 store.getState().functions.forEach(f => {

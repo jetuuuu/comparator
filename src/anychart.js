@@ -1,7 +1,9 @@
+import "babel-polyfill";
 const anychart = require("anychart");
 const Invoker = require("./invoker");
 const utils = require("./utils");
 
+let store;
 if (utils.isIframe()) {
   store = parent.store;
 }
@@ -10,31 +12,31 @@ const functions = {
   simpleLine: () => {
     var dataSet = anychart.data.set();
 
-    dataSet.data(this.dataSource);
+    dataSet.data(dataSource);
 
     var chart = anychart.line(dataSet);
 
-    chart.container(this.domContainer);
+    chart.container(domContainer);
     chart.draw();
   },
   simpleArea: () => {
     var dataSet = anychart.data.set();
 
-    dataSet.data(this.dataSource);
+    dataSet.data(dataSource);
 
     var chart = anychart.area(dataSet);
 
-    chart.container(this.domContainer);
+    chart.container(domContainer);
     chart.draw();
   },
   simpleBar: () => {
     var dataSet = anychart.data.set();
 
-    dataSet.data(this.dataSource);
+    dataSet.data(dataSource);
 
     var chart = anychart.bar(dataSet);
 
-    chart.container(this.domContainer);
+    chart.container(domContainer);
     chart.draw();
   }
 };
@@ -51,15 +53,16 @@ function generateDataSource() {
     });
 }
 
-this.domContainer = document.getElementById("chart");
+const domContainer = document.getElementById("chart");
+let dataSource;
 
 const invoker = new Invoker();
 
 invoker.beforeEach = () => {
-  this.dataSource = generateDataSource();
+  dataSource = generateDataSource();
 };
 invoker.afterEach = () => {
-  this.domContainer.innerHTML = "";
+  domContainer.innerHTML = "";
 };
 
 store.getState().functions.forEach(f => {
