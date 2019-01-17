@@ -1,9 +1,9 @@
-const $ = require("jquery");
 const dxChart = require("devextreme/viz/chart");
 const Invoker = require("./invoker");
+const utils = require("./utils");
 
-function randomNumner(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+if (utils.isIframe()) {
+  store = parent.store;
 }
 
 const functions = {
@@ -45,7 +45,7 @@ function generateDataSource() {
     .fill()
     .map((_, i) => {
       return {
-        value: randomNumner(0, count),
+        value: utils.randomNumner(0, count),
         argument: i
       };
     });
@@ -58,16 +58,16 @@ var invoker = new Invoker();
 invoker.beforeEach = () => {
   this.dataSource = generateDataSource();
 };
-invoker.afterEach1 = () => {
+invoker.afterEach = () => {
   this.domContainer.innerHTML = "";
 };
-debugger;
-parent.store.getState().functions.forEach(f => {
+
+store.getState().functions.forEach(f => {
   const result = invoker.invoke(
     functions[f].bind(this),
-    parent.store.getState().experiments
+    store.getState().experiments
   );
-  parent.store.dispatch({
+  store.dispatch({
     type: "dx_result",
     payload: {
       name: f,

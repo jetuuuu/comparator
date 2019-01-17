@@ -1,9 +1,9 @@
-const $ = require("jquery");
 const Highcharts = require("highcharts");
 const Invoker = require("./invoker");
+const utils = require("./utils");
 
-function randomNumner(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+if (utils.isIframe()) {
+  store = parent.store;
 }
 
 const functions = {
@@ -46,11 +46,11 @@ const functions = {
 };
 
 function generateDataSource() {
-  const count = store.getState().points;
+  const count = parent.store.getState().points;
   return Array(count)
     .fill()
-    .map((_, i) => {
-      return randomNumner(0, count);
+    .map(() => {
+      return utils.randomNumner(0, count);
     });
 }
 

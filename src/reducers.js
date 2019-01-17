@@ -21,6 +21,8 @@ export function result(state = initialState, action) {
       return Object.assign({}, state, {
         zingchart: [...state.zingchart, action.payload]
       });
+    case "clear_results":
+      return initialState;
     default:
       return state;
   }

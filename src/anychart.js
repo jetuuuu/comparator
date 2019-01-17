@@ -1,8 +1,9 @@
 const anychart = require("anychart");
 const Invoker = require("./invoker");
+const utils = require("./utils");
 
-function randomNumner(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+if (utils.isIframe()) {
+  store = parent.store;
 }
 
 const functions = {
@@ -44,7 +45,7 @@ function generateDataSource() {
     .fill()
     .map((_, i) => {
       return {
-        value: randomNumner(0, count),
+        value: utils.randomNumner(0, count),
         argument: i
       };
     });
