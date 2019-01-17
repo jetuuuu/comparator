@@ -4,14 +4,17 @@ const dxChart = require("devextreme/viz/chart");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store;
+let store,
+    dataSource,
+    chart;
+
 if (utils.isIframe()) {
   store = parent.store;
 }
 
 const functions = {
   simpleLine: () => {
-    new dxChart(domContainer, {
+    chart = new dxChart(domContainer, {
       dataSource: dataSource,
       commonSeriesSettings: {
         argumentField: "argument",
@@ -21,7 +24,7 @@ const functions = {
     });
   },
   simpleArea: () => {
-    new dxChart(this.domContainer, {
+    chart = new dxChart(this.domContainer, {
       dataSource: this.dataSource,
       commonSeriesSettings: {
         argumentField: "argument",
@@ -31,7 +34,7 @@ const functions = {
     });
   },
   simpleBar: () => {
-    new dxChart(this.domContainer, {
+    chart = new dxChart(this.domContainer, {
       dataSource: this.dataSource,
       commonSeriesSettings: {
         argumentField: "argument",
@@ -55,14 +58,15 @@ function generateDataSource() {
 }
 
 const domContainer = document.getElementById("chart");
-
-var invoker = new Invoker();
-let dataSource;
+const invoker = new Invoker();
 
 invoker.beforeEach = () => {
   dataSource = generateDataSource();
 };
+
 invoker.afterEach = () => {
+  chart.dispose();
+  chart = null;
   domContainer.innerHTML = "";
 };
 

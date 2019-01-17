@@ -4,14 +4,15 @@ const Highcharts = require("highcharts");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store;
+let store,
+    chart;
 if (utils.isIframe()) {
   store = parent.store;
 }
 
 const functions = {
   simpleArea: () => {
-    Highcharts.chart("chart", {
+    chart = Highcharts.chart("chart", {
       chart: {
         type: "area"
       },
@@ -23,7 +24,7 @@ const functions = {
     });
   },
   simpleLine: () => {
-    Highcharts.chart("chart", {
+    chart = Highcharts.chart("chart", {
       chart: {
         type: "line"
       },
@@ -35,7 +36,7 @@ const functions = {
     });
   },
   simpleBar: () => {
-    Highcharts.chart("chart", {
+    chart = Highcharts.chart("chart", {
       chart: {
         type: "bar"
       },
@@ -67,6 +68,8 @@ invoker.beforeEach = () => {
 };
 
 invoker.afterEach = () => {
+  chart.destroy();
+  chart = null;
   domContainer.innerHTML = "";
 };
 

@@ -3,7 +3,8 @@ const anychart = require("anychart");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store;
+let store,
+    chart;
 if (utils.isIframe()) {
   store = parent.store;
 }
@@ -11,30 +12,27 @@ if (utils.isIframe()) {
 const functions = {
   simpleLine: () => {
     var dataSet = anychart.data.set();
-
     dataSet.data(dataSource);
 
-    var chart = anychart.line(dataSet);
+    chart = anychart.line(dataSet);
 
     chart.container(domContainer);
     chart.draw();
   },
   simpleArea: () => {
     var dataSet = anychart.data.set();
-
     dataSet.data(dataSource);
 
-    var chart = anychart.area(dataSet);
+    chart = anychart.area(dataSet);
 
     chart.container(domContainer);
     chart.draw();
   },
   simpleBar: () => {
     var dataSet = anychart.data.set();
-
     dataSet.data(dataSource);
 
-    var chart = anychart.bar(dataSet);
+    chart = anychart.bar(dataSet);
 
     chart.container(domContainer);
     chart.draw();
@@ -62,6 +60,8 @@ invoker.beforeEach = () => {
   dataSource = generateDataSource();
 };
 invoker.afterEach = () => {
+  chart.dispose();
+  chart = null;
   domContainer.innerHTML = "";
 };
 

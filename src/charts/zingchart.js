@@ -4,14 +4,15 @@ const zingchart = require("zingchart");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store;
+let store,
+    chart;
 if (utils.isIframe()) {
   store = parent.store;
 }
 
 const functions = {
   simpleLine: () => {
-    zingchart.render({
+    chart = zingchart.render({
       id: "chart",
       data: {
         type: "line",
@@ -24,7 +25,7 @@ const functions = {
     });
   },
   simpleArea: () => {
-    zingchart.render({
+    chart = zingchart.render({
       id: "chart",
       data: {
         type: "area",
@@ -37,7 +38,7 @@ const functions = {
     });
   },
   simpleBar: () => {
-    zingchart.render({
+    chart = zingchart.render({
       id: "chart",
       data: {
         type: "bar",
@@ -70,6 +71,8 @@ invoker.beforeEach = () => {
 };
 
 invoker.afterEach = () => {
+  chart.destroy();
+  chart = null;
   domContainer.innerHTML = "";
 };
 
