@@ -19,29 +19,44 @@ const functions = {
           argumentField: "argument",
           type: "line"
         },
+        animation: {
+          enabled: false
+        },
         onDrawn: resolve(),
         series: [{ valueField: "value", name: "value" }]
       });
     });
   },
   simpleArea: () => {
-    chart = new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "area"
-      },
-      series: [{ valueField: "value", name: "value" }]
+    return new Promise(resolve => {
+      chart = new dxChart(domContainer, {
+        dataSource: dataSource,
+        commonSeriesSettings: {
+          argumentField: "argument",
+          type: "area"
+        },
+        animation: {
+          enabled: false
+        },
+        onDrawn: resolve(),
+        series: [{ valueField: "value", name: "value" }]
+      });
     });
   },
   simpleBar: () => {
-    chart = new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "bar"
-      },
-      series: [{ valueField: "value", name: "value" }]
+    return new Promise(resolve => {
+      chart = new dxChart(domContainer, {
+        dataSource: dataSource,
+        commonSeriesSettings: {
+          argumentField: "argument",
+          type: "bar"
+        },
+        animation: {
+          enabled: false
+        },
+        onDrawn: resolve(),
+        series: [{ valueField: "value", name: "value" }]
+      });
     });
   }
 };

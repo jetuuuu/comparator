@@ -4,8 +4,7 @@ const zingchart = require("zingchart");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store,
-    chart;
+let store, chart;
 if (utils.isIframe()) {
   store = parent.store;
 }
@@ -13,46 +12,56 @@ if (utils.isIframe()) {
 const functions = {
   simpleLine: () => {
     return new Promise(resolve => {
-    chart = zingchart.render({
-      id: "chart",
-      data: {
-        type: "line",
-        series: [
-          {
-            values: generateDataSource()
-          }
-        ]
-      },
-      events: {
-        complete: resolve()
-     }
+      chart = zingchart.render({
+        id: "chart",
+        data: {
+          type: "line",
+          series: [
+            {
+              values: generateDataSource()
+            }
+          ]
+        },
+        events: {
+          complete: resolve()
+        }
+      });
     });
-  });
   },
   simpleArea: () => {
-    chart = zingchart.render({
-      id: "chart",
-      data: {
-        type: "area",
-        series: [
-          {
-            values: generateDataSource()
-          }
-        ]
-      }
+    return new Promise(resolve => {
+      chart = zingchart.render({
+        id: "chart",
+        data: {
+          type: "area",
+          series: [
+            {
+              values: generateDataSource()
+            }
+          ]
+        },
+        events: {
+          complete: resolve()
+        }
+      });
     });
   },
   simpleBar: () => {
-    chart = zingchart.render({
-      id: "chart",
-      data: {
-        type: "bar",
-        series: [
-          {
-            values: generateDataSource()
-          }
-        ]
-      }
+    return new Promise(resolve => {
+      chart = zingchart.render({
+        id: "chart",
+        data: {
+          type: "bar",
+          series: [
+            {
+              values: generateDataSource()
+            }
+          ]
+        },
+        events: {
+          complete: resolve()
+        }
+      });
     });
   }
 };
@@ -77,17 +86,15 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  invoker.invoke(
-    functions[f].bind(this),
-    store.getState().experiments
-  ).then(result => {
-    store.dispatch({
-      type: "zingchart_result",
-      payload: {
-        name: f,
-        result
-      }
+  invoker
+    .invoke(functions[f].bind(this), store.getState().experiments)
+    .then(result => {
+      store.dispatch({
+        type: "zingchart_result",
+        payload: {
+          name: f,
+          result
+        }
+      });
     });
-  })
-
 });

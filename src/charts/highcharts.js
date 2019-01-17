@@ -4,55 +4,64 @@ const Highcharts = require("highcharts");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store,
-    chart;
+let store, chart;
 if (utils.isIframe()) {
   store = parent.store;
 }
 
 const functions = {
-  simpleArea: () => {
-    chart = Highcharts.chart("chart", {
-      chart: {
-        type: "area",
-        animation: false
-      },
-      series: [
-        {
-          data: dataSource
-        }
-      ]
-    });
-  },
   simpleLine: () => {
     return new Promise(resolve => {
-    chart = Highcharts.chart("chart", {
-      chart: {
-        type: "line",
-        animation: false,
-        events: {
-          load: resolve()
-        }
-      },
-      series: [
-        {
-          data: dataSource
-        }
-      ]
+      chart = Highcharts.chart("chart", {
+        chart: {
+          type: "line",
+          animation: false,
+          events: {
+            load: resolve()
+          }
+        },
+        series: [
+          {
+            data: dataSource
+          }
+        ]
+      });
     });
-  });
+  },
+  simpleArea: () => {
+    return new Promise(resolve => {
+      chart = Highcharts.chart("chart", {
+        chart: {
+          type: "area",
+          animation: false,
+          events: {
+            load: resolve()
+          }
+        },
+        series: [
+          {
+            data: dataSource
+          }
+        ]
+      });
+    });
   },
   simpleBar: () => {
-    chart = Highcharts.chart("chart", {
-      chart: {
-        type: "bar",
-        animation: false
-      },
-      series: [
-        {
-          data: dataSource
-        }
-      ]
+    return new Promise(resolve => {
+      chart = Highcharts.chart("chart", {
+        chart: {
+          type: "bar",
+          animation: false,
+          events: {
+            load: resolve()
+          }
+        },
+        series: [
+          {
+            data: dataSource
+          }
+        ]
+      });
     });
   }
 };
@@ -82,17 +91,15 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  invoker.invoke(
-    functions[f].bind(this),
-    store.getState().experiments
-  ).then(result => {
-    store.dispatch({
-      type: "highcharts_result",
-      payload: {
-        name: f,
-        result
-      }
+  invoker
+    .invoke(functions[f].bind(this), store.getState().experiments)
+    .then(result => {
+      store.dispatch({
+        type: "highcharts_result",
+        payload: {
+          name: f,
+          result
+        }
+      });
     });
-  });
-
 });

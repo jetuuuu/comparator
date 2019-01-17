@@ -18,27 +18,35 @@ const functions = {
       chart.container(domContainer);
       chart.listenOnce("chartDraw", resolve);
       chart.animation(false);
-      
+
       chart.draw();
     });
   },
   simpleArea: () => {
-    var dataSet = anychart.data.set();
-    dataSet.data(dataSource);
+    return new Promise(resolve => {
+      var dataSet = anychart.data.set();
+      dataSet.data(dataSource);
 
-    chart = anychart.area(dataSet);
+      chart = anychart.area(dataSet);
+      chart.listenOnce("chartDraw", resolve);
+      chart.animation(false);
+      chart.container(domContainer);
 
-    chart.container(domContainer);
-    chart.draw();
+      chart.draw();
+    });
   },
   simpleBar: () => {
-    var dataSet = anychart.data.set();
-    dataSet.data(dataSource);
+    return new Promise(resolve => {
+      var dataSet = anychart.data.set();
+      dataSet.data(dataSource);
 
-    chart = anychart.bar(dataSet);
+      chart = anychart.bar(dataSet);
+      chart.listenOnce("chartDraw", resolve);
+      chart.animation(false);
+      chart.container(domContainer);
 
-    chart.container(domContainer);
-    chart.draw();
+      chart.draw();
+    });
   }
 };
 
