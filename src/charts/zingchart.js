@@ -15,13 +15,105 @@ const functions = {
       chart = zingchart.render({
         id: "chart",
         data: {
-          type: "line",
-          series: [
+          gui: {
+            behaviors: [
+              {
+                id: "Reload",
+                enabled: "none"
+              },
+              {
+                id: "SaveAsImage",
+                enabled: "none"
+              },
+              {
+                id: "Print",
+                enabled: "none"
+              },
+              {
+                id: "BugReport",
+                enabled: "none"
+              },
+              {
+                id: "FullScreen",
+                enabled: "none"
+              },
+              {
+                id: "ZoomIn",
+                enabled: "all"
+              },
+              {
+                id: "ZoomOut",
+                enabled: "none"
+              },
+              {
+                id: "ViewAll",
+                enabled: "none"
+              },
+              {
+                id: "LogScale",
+                enabled: "none"
+              },
+              {
+                id: "DownloadPDF",
+                enabled: "none"
+              },
+              {
+                id: "3D",
+                enabled: "none"
+              },
+              {
+                id: "HideGuide",
+                enabled: "none"
+              }
+            ],
+            "context-menu": {
+              button: {
+                visible: 0
+              },
+              gear: {
+                visible: 0
+              }
+            }
+          },
+          graphset: [
             {
-              values: dataSource
+              output: "svg",
+              type: "line",
+              series: [
+                {
+                  values: dataSource
+                }
+              ],
+              tooltip: {
+                visible: false
+              },
+              scaleX: {
+                autoFit: true,
+                guide: {
+                  visible: false
+                }
+              },
+              scaleY: {
+                minValue: "auto",
+                autoFit: true,
+                guide: {
+                  visible: false
+                }
+              },
+              plot: {
+                mode: "fast",
+                smartSampling: true,
+                maxNodes: 0,
+                maxTrackers: 0,
+                shadow: false,
+                marker: {
+                  visible: false
+                }
+              }
             }
           ]
         },
+
         events: {
           complete: resolve
         }
@@ -31,6 +123,7 @@ const functions = {
   simpleArea: () => {
     return new Promise(resolve => {
       chart = zingchart.render({
+        output: "svg",
         id: "chart",
         data: {
           type: "area",

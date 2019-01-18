@@ -25,7 +25,7 @@ class Invoker {
 
     return chain.then(() => {
       const results = times.map(item => item.end - item.start);
-
+      console.log(results);
       return {
         rawResult: results,
         median: utils.median(results).toFixed(2)

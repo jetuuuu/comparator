@@ -23,7 +23,11 @@ const functions = {
           enabled: false
         },
         onDrawn: resolve,
-        series: [{ valueField: "value", name: "value" }]
+        series: [{
+          valueField: "value",
+          name: "value",
+          point: { visible: false }
+        }]
       });
     });
   },
@@ -80,7 +84,7 @@ invoker.beforeEach = () => {
   dataSource = generateDataSource();
 };
 
-invoker.afterEach = () => {
+invoker.afterEach1 = () => {
   chart.dispose();
   chart = null;
   domContainer.innerHTML = "";

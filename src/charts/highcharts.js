@@ -9,6 +9,29 @@ if (utils.isIframe()) {
   store = parent.store;
 }
 
+Highcharts.setOptions({
+  plotOptions: {
+      area: { animation: false, enableMouseTracking: false, stickyTracking: true, shadow: false, dataLabels: { style: { textShadow: false } } },
+      bar: { animation: false, enableMouseTracking: false, stickyTracking: true, shadow: false, dataLabels: { style: { textShadow: false } } },
+      column: { animation: false, enableMouseTracking: false, stickyTracking: true, shadow: false, dataLabels: { style: { textShadow: false } } },
+      line: { animation: false, enableMouseTracking: false, stickyTracking: true, shadow: false, dataLabels: { style: { textShadow: false } } }
+  },
+  chart: {
+      reflow: false,
+      animation: false
+  },
+  tooltip: {
+      enabled: false,
+      animation: false
+  },
+  exporting: {
+      enabled:false
+  },
+  credits: {
+      enabled: false
+  }
+});
+
 const functions = {
   simpleLine: () => {
     return new Promise(resolve => {
@@ -20,11 +43,30 @@ const functions = {
             load: resolve
           }
         },
+        tooltip: {
+          enabled: false,
+          animation: false
+      },
+        title: {
+          text: undefined
+        },
+        plotOptions: {
+          series: {
+              animation: false
+          }
+      },
         series: [
           {
-            data: dataSource
+            data: dataSource,
+            label: {
+              enabled: false
+            },
+            showInLegend: false
           }
-        ]
+        ],
+        yAxis: [{
+          gridLineWidth: 0,
+          minorGridLineWidth: 0 }]
       });
     });
   },
