@@ -4,9 +4,7 @@ const dxChart = require("devextreme/viz/chart");
 const Invoker = require("../invoker");
 const utils = require("../utils");
 
-let store,
-    dataSource,
-    chart;
+let store, dataSource, chart;
 
 if (utils.isIframe()) {
   store = parent.store;
@@ -14,33 +12,51 @@ if (utils.isIframe()) {
 
 const functions = {
   simpleLine: () => {
-    chart = new dxChart(domContainer, {
-      dataSource: dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "line"
-      },
-      series: [{ valueField: "value", name: "value" }]
+    return new Promise(resolve => {
+      chart = new dxChart(domContainer, {
+        dataSource: dataSource,
+        commonSeriesSettings: {
+          argumentField: "argument",
+          type: "line"
+        },
+        animation: {
+          enabled: false
+        },
+        onDrawn: resolve,
+        series: [{ valueField: "value", name: "value" }]
+      });
     });
   },
   simpleArea: () => {
-    chart = new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "area"
-      },
-      series: [{ valueField: "value", name: "value" }]
+    return new Promise(resolve => {
+      chart = new dxChart(domContainer, {
+        dataSource: dataSource,
+        commonSeriesSettings: {
+          argumentField: "argument",
+          type: "area"
+        },
+        animation: {
+          enabled: false
+        },
+        onDrawn: resolve,
+        series: [{ valueField: "value", name: "value" }]
+      });
     });
   },
   simpleBar: () => {
-    chart = new dxChart(this.domContainer, {
-      dataSource: this.dataSource,
-      commonSeriesSettings: {
-        argumentField: "argument",
-        type: "bar"
-      },
-      series: [{ valueField: "value", name: "value" }]
+    return new Promise(resolve => {
+      chart = new dxChart(domContainer, {
+        dataSource: dataSource,
+        commonSeriesSettings: {
+          argumentField: "argument",
+          type: "bar"
+        },
+        animation: {
+          enabled: false
+        },
+        onDrawn: resolve,
+        series: [{ valueField: "value", name: "value" }]
+      });
     });
   }
 };
@@ -71,15 +87,15 @@ invoker.afterEach = () => {
 };
 
 store.getState().functions.forEach(f => {
-  const result = invoker.invoke(
-    functions[f].bind(this),
-    store.getState().experiments
-  );
-  store.dispatch({
-    type: "dx_result",
-    payload: {
-      name: f,
-      result
-    }
-  });
+  invoker
+    .invoke(functions[f].bind(this), store.getState().experiments)
+    .then(result => {
+      store.dispatch({
+        type: "dx_result",
+        payload: {
+          name: f,
+          result
+        }
+      });
+    });
 });

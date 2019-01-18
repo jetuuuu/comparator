@@ -1,4 +1,5 @@
 import "babel-polyfill";
+import utils from "./utils";
 
 class Invoker {
   constructor() {
@@ -7,26 +8,29 @@ class Invoker {
   }
 
   invoke(func, n) {
-    const results = Array(n)
-      .fill()
-      .map((_, i) => {
-        this.beforeEach();
+    let chain = Promise.resolve([]);
+    const times = [];
+    for (let i = 0; i < n; i++) {
+      chain = chain
+        .then(this.beforeEach)
+        .then(() => {
+          times.push({ start: performance.now() });
+        })
+        .then(func)
+        .then(() => {
+          times[times.length - 1].end = performance.now();
+        })
+        .then(this.afterEach);
+    }
 
-        const start = performance.now();
-        func();
-        const end = performance.now();
+    return chain.then(() => {
+      const results = times.map(item => item.end - item.start);
 
-        this.afterEach();
-
-        return end - start;
-      });
-
-    return {
-      rawResult: results,
-      max: Math.max.apply(null, results).toFixed(2),
-      min: Math.min.apply(null, results).toFixed(2),
-      avg: (results.reduce((p, c) => p + c, 0) / results.length).toFixed(2)
-    };
+      return {
+        rawResult: results,
+        median: utils.median(results).toFixed(2)
+      };
+    });
   }
 }
 
