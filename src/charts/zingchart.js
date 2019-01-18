@@ -23,7 +23,7 @@ const functions = {
           ]
         },
         events: {
-          complete: resolve()
+          complete: resolve
         }
       });
     });
@@ -41,7 +41,7 @@ const functions = {
           ]
         },
         events: {
-          complete: resolve()
+          complete: resolve
         }
       });
     });
@@ -59,7 +59,7 @@ const functions = {
           ]
         },
         events: {
-          complete: resolve()
+          complete: resolve
         }
       });
     });

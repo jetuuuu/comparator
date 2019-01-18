@@ -4,7 +4,8 @@ const initialState = {
   dx: [],
   highcharts: [],
   anychart: [],
-  zingchart: []
+  zingchart: [],
+  amcharts: []
 };
 
 export function result(state = initialState, action) {
@@ -22,6 +23,10 @@ export function result(state = initialState, action) {
     case "zingchart_result":
       return Object.assign({}, state, {
         zingchart: [...state.zingchart, action.payload]
+      });
+      case "amcharts_result":
+      return Object.assign({}, state, {
+        amcharts: [...state.amcharts, action.payload]
       });
     case "clear_results":
       return initialState;

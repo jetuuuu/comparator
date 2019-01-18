@@ -22,7 +22,7 @@ const functions = {
         animation: {
           enabled: false
         },
-        onDrawn: resolve(),
+        onDrawn: resolve,
         series: [{ valueField: "value", name: "value" }]
       });
     });
@@ -38,7 +38,7 @@ const functions = {
         animation: {
           enabled: false
         },
-        onDrawn: resolve(),
+        onDrawn: resolve,
         series: [{ valueField: "value", name: "value" }]
       });
     });
@@ -54,7 +54,7 @@ const functions = {
         animation: {
           enabled: false
         },
-        onDrawn: resolve(),
+        onDrawn: resolve,
         series: [{ valueField: "value", name: "value" }]
       });
     });

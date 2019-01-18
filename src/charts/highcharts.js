@@ -17,7 +17,7 @@ const functions = {
           type: "line",
           animation: false,
           events: {
-            load: resolve()
+            load: resolve
           }
         },
         series: [
@@ -35,7 +35,7 @@ const functions = {
           type: "area",
           animation: false,
           events: {
-            load: resolve()
+            load: resolve
           }
         },
         series: [
@@ -53,7 +53,7 @@ const functions = {
           type: "bar",
           animation: false,
           events: {
-            load: resolve()
+            load: resolve
           }
         },
         series: [

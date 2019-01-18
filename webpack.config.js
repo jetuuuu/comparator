@@ -52,7 +52,7 @@ module.exports = {
                 presets: [[
                   "env", {targets: { browsers }, useBuiltIns: true}
                 ],
-                "es2015", "es2015-ie", "es2015-script"]
+                "es2015", "es2015-ie"]
               }
             }
           }
