@@ -18,7 +18,7 @@ const functions = {
           type: "line",
           series: [
             {
-              values: generateDataSource()
+              values: dataSource
             }
           ]
         },
@@ -36,7 +36,7 @@ const functions = {
           type: "area",
           series: [
             {
-              values: generateDataSource()
+              values: dataSource
             }
           ]
         },
@@ -54,7 +54,7 @@ const functions = {
           type: "bar",
           series: [
             {
-              values: generateDataSource()
+              values: dataSource
             }
           ]
         },
@@ -78,6 +78,11 @@ function generateDataSource() {
 const domContainer = document.getElementById("chart");
 
 const invoker = new Invoker();
+let dataSource;
+
+invoker.beforeEach = () => {
+  dataSource = generateDataSource();
+};
 
 invoker.afterEach = () => {
   chart.destroy();

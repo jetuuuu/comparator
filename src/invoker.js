@@ -24,8 +24,6 @@ class Invoker {
     }
 
     return chain.then(() => {
-      console.log(times);
-
       const results = times.map(item => item.end - item.start);
 
       return {
