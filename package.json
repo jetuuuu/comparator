@@ -12,6 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "@amcharts/amcharts4": "^4.0.21",
+    "@progress/kendo-charts": "^1.12.3",
+    "@progress/kendo-ui": "^2019.1.115",
     "amcharts": "^3.14.5",
     "anychart": "^8.5.0",
     "babel-core": "^6.26.3",
